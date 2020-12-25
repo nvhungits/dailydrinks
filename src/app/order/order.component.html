@@ -1,0 +1,67 @@
+
+<div class="container">
+    <header>
+        <h1>Imaginato - dailydrinks</h1>
+    </header>
+    <div class="row">
+        
+        <button class="btn btn-primary" (click)="open(mymodal, orderSelected, 'new')">Add</button>
+        <table class="table table-bordered">
+            <thead>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Notes</th>
+            <th>Actions</th>
+            </thead>
+            <tbody>
+            <tr *ngFor="let order of orders | slice:0:3; let i=index">
+                <td>{{order.name}}</td>
+                <td>{{order.price}}</td>
+                <td>{{order.notes}}</td>
+                <td>
+                    <button class="btn btn-info" style="margin-right: 10px;" (click)="open(mymodal, i, 'edit')">Edit</button>
+                    <button class="btn btn-warning" (click)="delete(i)">Delete</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<ng-template #mymodal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Order Info</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-3">
+                <label>Name</label>
+            </div>
+            <div class="col-md-6">
+                <input type="text" [(ngModel)]="orderSelected.name" class="form-group" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <label>Price</label>
+            </div>
+            <div class="col-md-6">
+                <input type="text" [(ngModel)]="orderSelected.price" class="form-group" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <label>Notes</label>
+            </div>
+            <div class="col-md-6">
+                <textarea type="text" [(ngModel)]="orderSelected.notes" class="form-group"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="addOrUpdate(orderSelected);modal.close();">{{isNew? "Create" : "Save"}}</button>
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Close</button>
+    </div>
+</ng-template>
